@@ -9,9 +9,6 @@ function Wheel(props) {
     wheel
   } = props
 
-  console.log(props)
-
-
   return (
     <div id="wrapper">
       <div id="wheel">
@@ -30,7 +27,6 @@ function Wheel(props) {
   )
 }
 const mapStateToProps = state => {
-  console.log('states', state)
   return {
     wheel: state.wheel
   }
