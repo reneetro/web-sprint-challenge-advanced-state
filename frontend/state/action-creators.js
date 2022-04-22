@@ -38,7 +38,11 @@ export const inputChange = (id, value) => {
   }
 }
 
-export function resetForm() { }
+export function resetForm() {
+  return {
+    type: types.RESET_FORM,
+  }
+ }
 
 // ❗ Async action creators
 export function fetchQuiz() {
@@ -95,7 +99,8 @@ export function postQuiz(question, trueAnswer, falseAnswer) {
     // - Dispatch the resetting of the form
     axios.post('http://localhost:9000/api/quiz/new', newQuestion)
       .then(res => {
-        console.log(res)
+        dispatch({type: types.SET_INFO_MESSAGE, payload: `Congrats: "${res.data.question}" is a great question!`})
+        dispatch(resetForm())
       })
       .catch(err =>{
         debugger
