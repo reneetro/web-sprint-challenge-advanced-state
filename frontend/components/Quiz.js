@@ -4,7 +4,7 @@ import * as actions from '../state/action-creators'
 
 export function Quiz(props) {
 const {quiz, selectAnswer, fetchQuiz, selectedAnswer, postAnswer } = props
-console.log(props)
+
 
 useEffect(() => {
   fetchQuiz()
@@ -43,7 +43,7 @@ useEffect(() => {
 }
 
 const mapStateToProps = state => {
-  console.log('states', state)
+
   return {
     quiz: state.quiz,
     selectedAnswer: state.selectedAnswer

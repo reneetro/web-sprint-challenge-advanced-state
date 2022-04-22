@@ -4,12 +4,22 @@ import * as actionCreators from '../state/action-creators'
 
 export function Form(props) {
 
+  const {inputChange, form, postQuiz} = props
   const onChange = evt => {
-
+    const { id, value } = evt.target
+    inputChange(id, value)
   }
 
   const onSubmit = evt => {
+    evt.preventDefault()
+  }
 
+  const checkDisabled = () => {
+    if(form.newFalseAnswer.trim().length > 1 && form.newTrueAnswer.trim().length > 1 && form.newQuestion.trim().length > 1){
+      return false
+    }else{
+      return true
+    }
   }
 
   return (
@@ -18,7 +28,7 @@ export function Form(props) {
       <input maxLength={50} onChange={onChange} id="newQuestion" placeholder="Enter question" />
       <input maxLength={50} onChange={onChange} id="newTrueAnswer" placeholder="Enter true answer" />
       <input maxLength={50} onChange={onChange} id="newFalseAnswer" placeholder="Enter false answer" />
-      <button id="submitNewQuizBtn">Submit new quiz</button>
+      <button id="submitNewQuizBtn" disabled={checkDisabled()} onClick={() => postQuiz(form.newQuestion, form.newFalseAnswer, form.newTrueAnswer)}>Submit new quiz</button>
     </form>
   )
 }

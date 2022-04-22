@@ -31,7 +31,12 @@ export function setQuiz() {
 
 }
 
-export function inputChange() { }
+export const inputChange = (id, value) => {
+  return {
+    type: types.INPUT_CHANGE,
+    payload: { id, value},
+  }
+}
 
 export function resetForm() { }
 
@@ -59,14 +64,14 @@ export function fetchQuiz() {
 }
 export function postAnswer(quizId, answerId) {
   return function (dispatch) {
-    const payload = {
+    const submission = {
        "quiz_id": `${quizId}`, "answer_id": `${answerId}`
     }
     // On successful POST:
     // - Dispatch an action to reset the selected answer state
     // - Dispatch an action to set the server message to state
     // - Dispatch the fetching of the next quiz
-    axios.post('http://localhost:9000/api/quiz/answer', payload)
+    axios.post('http://localhost:9000/api/quiz/answer', submission)
       .then(res => {
         dispatch({type: types.SET_SELECTED_ANSWER, payload: null})
         dispatch({type: types.SET_INFO_MESSAGE, payload: res.data.message})
@@ -78,11 +83,23 @@ export function postAnswer(quizId, answerId) {
       
   }
 }
-export function postQuiz() {
+export function postQuiz(question, trueAnswer, falseAnswer) {
   return function (dispatch) {
+    const newQuestion = {
+      "question_text": `${question}`, 
+      "true_answer_text": `${trueAnswer}`,
+      "false_answer_text": `${falseAnswer}` 
+    }
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form
+    axios.post('http://localhost:9000/api/quiz/new', newQuestion)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err =>{
+        debugger
+      })
   }
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state
