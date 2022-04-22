@@ -21,7 +21,11 @@ export function selectAnswer(id) {
   }
 }
 
-export function setMessage() { }
+export function setMessage() { 
+  return {
+    type: types.SET_INFO_MESSAGE
+  }
+}
 
 export function setQuiz() { 
 
@@ -64,12 +68,14 @@ export function postAnswer(quizId, answerId) {
     // - Dispatch the fetching of the next quiz
     axios.post('http://localhost:9000/api/quiz/answer', payload)
       .then(res => {
-        console.log(res)
+        dispatch({type: types.SET_SELECTED_ANSWER, payload: null})
+        dispatch({type: types.SET_INFO_MESSAGE, payload: res.data.message})
+        dispatch(fetchQuiz())
       })
       .catch(err => {
         debugger
       })
-
+      
   }
 }
 export function postQuiz() {
